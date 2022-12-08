@@ -10,23 +10,36 @@ namespace AstronomieForm
     {
 		#region Attributs
 		private string _nom;
-		private List<Planete> _lstPlanetes;
-		#endregion
+		private static List<Planete> _lstPlanetes;
+        public static List<Galaxie> _lstGalaxies;
+        #endregion
 
-		#region Accesseurs
-		public List<Planete> lstPlanetes
+        #region Accesseurs
+        public static List<Planete> lstPlanetes
 		{
 			get { return _lstPlanetes; }
 			set { _lstPlanetes = value; }
 		}
+        public static List<Galaxie> lstGalaxie
+        {
+            get { return _lstGalaxies; }
+            set { _lstGalaxies = value; }
+        }
 
-		public string Nom
+
+
+        public string Nom
 		{
 			get { return _nom; }
 			set { _nom = value; }
 		}
 		#endregion
 
+		public Galaxie() { }
+		public Galaxie(string nom):base()
+		{
+			_nom = nom;
+		}
 
 
 		#region Méthodes publiques

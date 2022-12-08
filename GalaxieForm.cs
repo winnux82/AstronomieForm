@@ -30,14 +30,22 @@ namespace AstronomieForm
                 if (TxbNom.Text.Length > 0)
                 {
 
-                    Galaxie coucou = new Galaxie();
-                    coucou.Nom= TxbNom.Text;
+                    Galaxie NewGalaxie = new Galaxie($"{TxbNom.Text}");
+
+                    MessageBox.Show(Galaxie.lstGalaxie.Count.ToString());
+                    return;
+
+                    MessageBox.Show(Galaxie.lstGalaxie.Count.ToString());
+                    if (!Galaxie.lstGalaxie.Contains(NewGalaxie))
+                    {
+                        Galaxie.lstGalaxie.Add(NewGalaxie);
+                    }
                     //MessageBox.Show("bravo");
-                    PlaneteForm planeteForm = new PlaneteForm();
+                    else
+                    {
+                        MessageBox.Show("Galaxie déjà présente");
+                    }
                     
-                    planeteForm.ShowDialog();
-
-
 
 
                 }

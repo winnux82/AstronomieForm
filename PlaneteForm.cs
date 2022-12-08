@@ -25,7 +25,22 @@ namespace AstronomieForm
 
         private void DigitOnly_KeyPress(object sender, KeyPressEventArgs e)
         {
-            e.Handled = !(char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            TextBox txb = (TextBox)sender;
+
+            if (txb.Text.IndexOf('.') == -1)
+            {
+                if (!(char.IsDigit(e.KeyChar) || char.IsControl(e.KeyChar) || e.KeyChar == '.'))
+                {
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                if (!(char.IsDigit(e.KeyChar) || char.IsControl(e.KeyChar)))
+                {
+                    e.Handled = true;
+                }
+            }
         }
 
 
@@ -33,26 +48,49 @@ namespace AstronomieForm
 
         private void BtnAjouter_Click(object sender, EventArgs e)
         {
-            if(IsNotEmptyOnlyLetters(TxbNom.Text)&& IsOnlyDigt(TxbMasse.Text))
+            if(IsNotEmptyOnlyLetters(TxbNom.Text)&& IsOnlyDigit(TxbMasse.Text))
             {
-
-                if(TxbGalaxie.Text=="")
+                try
                 {
+                    if (TxbGalaxie.Text == "")
+                    {
 
-                    Planete Planete0 = new Planete(TxbNom.Text, Convert.ToInt32(TxbDiamètre.Text), Convert.ToInt32(TxbMasse.Text));
+                        Planete Planete0 = new Planete(TxbNom.Text, float.Parse(TxbDiamètre.Text), float.Parse(TxbMasse.Text));
 
-                    new GalaxieForm().ShowDialog();
-                   this.Hide();
-                   this.Dispose();
-                   return;
+                        new GalaxieForm().ShowDialog();
+                        this.Hide();
+                        this.Dispose();
+                        return;
+                    }
+                    Galaxie GalaxieBoum = new Galaxie(TxbGalaxie.Text);
+                    Galaxie.lstGalaxie = new List<Galaxie>();
+
+                    if (!Galaxie.lstGalaxie.Contains(GalaxieBoum))
+                    {
+                        Galaxie.lstGalaxie.Add(GalaxieBoum);
+                    }
+                    else
+                    {
+                        MessageBox.Show("La galaxie existe déjà");
+                    }
+
+                    //Planete Planete1 = new Planete(TxbNom.Text, float.Parse(TxbDiamètre.Text), float.Parse(TxbMasse.Text));
+
+                    //MessageBox.Show(Planete1.Description());
                 }
-                Planete Planete1 = new Planete(TxbNom.Text,Convert.ToInt32(TxbDiamètre.Text), Convert.ToInt32(TxbMasse.Text));
-                MessageBox.Show(Planete1.Description());
+                catch(Exception Ex)
+                {
+                    MessageBox.Show(Ex.Message);
+                }
+
 
             }
             else
             {
-                throw new ExceptionSaisie("Une erreur de saison empêche l'aout de la planète");
+                MessageBox.Show("oups");
+                //throw new ExceptionSaisie("Une erreur de saisie empêche l'ajout de la planète");
+                //return;
+
             }
         }
         public class ExceptionSaisie : Exception
@@ -75,12 +113,12 @@ namespace AstronomieForm
             return true;
         }
 
-        public static bool IsOnlyDigt(string s)
+        public static bool IsOnlyDigit(string s)
         {
 
             foreach (char caractere in s)
             {
-                if (!char.IsDigit(caractere))
+                if (!(char.IsDigit(caractere)|| char.IsControl(caractere) || caractere == '.'))
                     return false;
             }
 

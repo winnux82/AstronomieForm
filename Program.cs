@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace AstronomieForm
 {
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         /// Point d'entrée principal de l'application.
@@ -24,11 +24,13 @@ namespace AstronomieForm
             Planete Mars = new Planete("Mars", 0.11f, 0.532f);
             Planete Jupiter = new Planete("Jupiter", 317.8f, 11.209f);
 
-            //Galaxie Galaxie = new Galaxie();
-            //Galaxie.Nom = "Voie_lactée";
+            Galaxie GalaxieEssai = new Galaxie("essai");
 
-            //Galaxie.lstPlanetes = new List<Planete>() { Mercure, Venus, Terre, Mars };
-            //Galaxie.lstPlanetes.Add(Jupiter);
+            Galaxie.lstPlanetes = new List<Planete>() { Mercure, Venus, Terre, Mars };
+            Galaxie.lstPlanetes.Add(Jupiter);
+
+            Galaxie.lstGalaxie = new List<Galaxie> { GalaxieEssai };
+
 
             //Console.WriteLine(Galaxie.Description());
 
